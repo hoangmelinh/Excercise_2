@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/surface">
+
+    <!-- Tiêu đề Dialog -->
+    <TextView
+        android:id="@+id/tvDetailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CHI TIẾT PHIẾU LƯƠNG"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDetailSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Nguyễn Văn An • EMP001 • Tháng 10/2026"
+        android:textColor="@color/text_muted"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/card_stroke" />
+
+    <!-- Dòng 1: Giờ làm thường -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvDetailRegularLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Giờ làm thường (160h x 50.000đ):"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvDetailRegularAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8.000.000 đ"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Dòng 2: Giờ tăng ca (OT x1.5) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvDetailOvertimeLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tăng ca OT x1.5 (16h x 75.000đ):"
+            android:textColor="@color/badge_warning_text"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDetailOvertimeAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.200.000 đ"
+            android:textColor="@color/badge_warning_text"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/card_stroke" />
+
+    <!-- Dòng 3: Tổng thực lĩnh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TỔNG THỰC LĨNH:"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDetailTotalSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9.200.000 đ"
+            android:textColor="@color/badge_success_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Nút đóng -->
+    <Button
+        android:id="@+id/btnDetailClose"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:text="Đóng"
+        app:cornerRadius="10dp" />
+
+</LinearLayout>

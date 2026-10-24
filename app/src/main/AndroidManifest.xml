@@ -39,6 +39,17 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <!-- Màn hình Quản lý Lương & Phiếu lương (Nguyễn Văn Hiển Vinh) -->
+        <activity
+            android:name=".controller.AdminSalaryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".controller.EmployeeSalaryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
