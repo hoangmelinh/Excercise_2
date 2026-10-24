@@ -50,6 +50,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
     private TextView tvHistoryCount;
     private TextView tvFilterMonthLabel;
     private MaterialButton btnEmployeeLogout;
+    private MaterialButton btnViewSalary;
     private MaterialButton btnCheckIn;
     private MaterialButton btnCheckOut;
     private MaterialButton btnRefresh;
@@ -116,6 +117,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
         tvHistoryCount = findViewById(R.id.tvHistoryCount);
         tvFilterMonthLabel = findViewById(R.id.tvFilterMonthLabel);
         btnEmployeeLogout = findViewById(R.id.btnEmployeeLogout);
+        btnViewSalary = findViewById(R.id.btnViewSalary);
         btnCheckIn = findViewById(R.id.btnCheckIn);
         btnCheckOut = findViewById(R.id.btnCheckOut);
         btnRefresh = findViewById(R.id.btnRefresh);
@@ -137,6 +139,13 @@ public class EmployeeMainActivity extends AppCompatActivity {
     private void setupListeners() {
         if (btnEmployeeLogout != null) {
             btnEmployeeLogout.setOnClickListener(v -> performLogout());
+        }
+        if (btnViewSalary != null) {
+            btnViewSalary.setOnClickListener(v -> {
+                Intent intent = new Intent(EmployeeMainActivity.this, EmployeeSalaryActivity.class);
+                intent.putExtra("EXTRA_EMPLOYEE_ID", currentEmployeeId);
+                startActivity(intent);
+            });
         }
         btnCheckIn.setOnClickListener(v -> handleCheckIn());
         btnCheckOut.setOnClickListener(v -> showConfirmCheckOutDialog());

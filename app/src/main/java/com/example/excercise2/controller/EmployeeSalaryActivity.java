@@ -28,6 +28,7 @@ import com.example.excercise2.repository.SalaryRepository;
 import com.example.excercise2.service.SalaryService;
 import com.example.excercise2.utils.CurrencyUtils;
 import com.example.excercise2.utils.DateUtils;
+import com.example.excercise2.utils.SharedPrefManager;
 
 import java.util.Calendar;
 import java.util.List;
@@ -67,6 +68,17 @@ public class EmployeeSalaryActivity extends AppCompatActivity implements SalaryA
         initViews();
         setupStatusBarInsets();
         initRepositories();
+
+        int empIdExtra = getIntent().getIntExtra("EXTRA_EMPLOYEE_ID", -1);
+        if (empIdExtra > 0) {
+            currentEmployeeId = empIdExtra;
+        } else {
+            int prefEmpId = SharedPrefManager.getInstance(this).getEmployeeId();
+            if (prefEmpId > 0) {
+                currentEmployeeId = prefEmpId;
+            }
+        }
+
         setupEmployeeInfo();
         setupRecyclerView();
         setupMonthSpinner();
