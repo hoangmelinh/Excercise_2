@@ -46,6 +46,23 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
+            <!-- Nút điều hướng sang Bảng lương toàn công ty -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnManageSalary"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:text="Bảng lương"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/primary_accent"
+                app:icon="@drawable/ic_salary"
+                app:iconSize="18dp"
+                app:iconTint="@color/white"
+                app:cornerRadius="10dp" />
+
             <!-- Nút đăng xuất -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

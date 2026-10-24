@@ -43,6 +43,7 @@ public class AdminMainActivity extends AppCompatActivity implements EmployeeAdap
     private TextView tvEmptyState;
     private FloatingActionButton fabAddEmployee;
     private MaterialButton btnLogout;
+    private MaterialButton btnManageSalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class AdminMainActivity extends AppCompatActivity implements EmployeeAdap
         tvEmptyState = findViewById(R.id.tvEmptyState);
         fabAddEmployee = findViewById(R.id.fabAddEmployee);
         btnLogout = findViewById(R.id.btnLogout);
+        btnManageSalary = findViewById(R.id.btnManageSalary);
     }
 
     // Cài đặt đệm chống tràn Status Bar theo Rule V.4
@@ -104,6 +106,12 @@ public class AdminMainActivity extends AppCompatActivity implements EmployeeAdap
     private void setupActionButtons() {
         fabAddEmployee.setOnClickListener(v -> showAddEmployeeDialog());
         btnLogout.setOnClickListener(v -> performLogout());
+        if (btnManageSalary != null) {
+            btnManageSalary.setOnClickListener(v -> {
+                Intent intent = new Intent(AdminMainActivity.this, AdminSalaryActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     // Tải toàn bộ danh sách nhân viên từ CSDL
