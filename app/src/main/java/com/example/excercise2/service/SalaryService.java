@@ -42,7 +42,7 @@ public class SalaryService {
             return ServiceResult.error("Nhân viên " + employee.getFullname() + " chưa được cấu hình đơn giá lương theo giờ!");
         }
         // 3. Lấy dữ liệu nhật ký chấm công trong tháng
-        List<WorkLog> logs = workLogRepository.getWorkLogsByEmployeeAndMonth(employeeId, month, year);
+        List<WorkLog> logs = workLogRepository.getWorkLogsByMonth(employeeId, month, year);
         if (logs.isEmpty()) {
             return ServiceResult.error("Nhân viên " + employee.getFullname() + " chưa có dữ liệu chấm công tháng " + month + "/" + year + "!");
         }
@@ -89,7 +89,7 @@ public class SalaryService {
             return ServiceResult.error("Lỗi khi lưu bảng lương vào cơ sở dữ liệu!");
         }
 
-        return ServiceResult.success("Đã tính lương tháng " + month + "/" + year + " thành công!", salary);
+        return ServiceResult.success(salary, "Đã tính lương tháng " + month + "/" + year + " thành công!");
     }
 
     // Tính toán lương tự động hàng loạt cho toàn bộ nhân viên công ty (Batch Calculation 1 chạm)
@@ -115,7 +115,7 @@ public class SalaryService {
             return ServiceResult.error("Không tìm thấy dữ liệu chấm công nào của các nhân viên trong tháng " + month + "/" + year + "!");
         }
 
-        return ServiceResult.success("Đã tự động tính lương thành công cho " + successCount + " nhân viên!", successCount);
+        return ServiceResult.success(successCount, "Đã tự động tính lương thành công cho " + successCount + " nhân viên!");
     }
 
     // Xác nhận chi trả lương cho nhân viên (chuyển trạng thái sang Paid)
@@ -126,7 +126,7 @@ public class SalaryService {
 
         boolean ok = salaryRepository.updateSalaryStatus(salaryId, Salary.STATUS_PAID);
         if (ok) {
-            return ServiceResult.success("Đã xác nhận chi trả lương thành công!", true);
+            return ServiceResult.success(true, "Đã xác nhận chi trả lương thành công!");
         }
         return ServiceResult.error("Không thể cập nhật trạng thái phiếu lương!");
     }

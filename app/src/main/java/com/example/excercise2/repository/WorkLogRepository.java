@@ -128,6 +128,11 @@ public class WorkLogRepository {
         return list;
     }
 
+    // Alias tương thích cho getWorkLogsByMonth
+    public List<WorkLog> getWorkLogsByEmployeeAndMonth(int employeeId, int month, int year) {
+        return getWorkLogsByMonth(employeeId, month, year);
+    }
+
     // Chuyển dòng dữ liệu Cursor thành đối tượng WorkLog
     private WorkLog cursorToWorkLog(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_WORK_ID));

@@ -91,9 +91,10 @@ public class SalaryServiceUnitTest {
 
     @Test
     public void testServiceResultHelper() {
-        ServiceResult<String> successResult = ServiceResult.success("Thao tác thành công", "DATA_TEST");
+        ServiceResult<String> successResult = ServiceResult.success("DATA_TEST", "Thao tác thành công");
         assertTrue(successResult.isSuccess());
         assertEquals("DATA_TEST", successResult.getData());
+        assertEquals("Thao tác thành công", successResult.getMessage());
 
         ServiceResult<String> errorResult = ServiceResult.error("Dữ liệu không hợp lệ");
         assertFalse(errorResult.isSuccess());
