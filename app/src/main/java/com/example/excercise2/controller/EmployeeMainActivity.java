@@ -1,5 +1,6 @@
 package com.example.excercise2.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.excercise2.R;
 import com.example.excercise2.controller.adapter.WorkLogAdapter;
 import com.example.excercise2.model.WorkLog;
+import com.example.excercise2.service.AuthService;
 import com.example.excercise2.service.ServiceResult;
 import com.example.excercise2.service.WorkLogService;
 import com.example.excercise2.utils.DateUtils;
@@ -29,17 +31,17 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-// Màn hình chấm công và theo dõi giờ làm việc của nhân viên
+// Màn hình chính của Nhân viên (Chấm công, tính giờ làm việc và đăng xuất)
 public class EmployeeMainActivity extends AppCompatActivity {
 
+    private AuthService authService;
     private SharedPrefManager prefManager;
     private WorkLogService workLogService;
     private WorkLogAdapter adapter;
     private int currentEmployeeId = 2; // Mặc định ID mẫu Phạm Hải Long để mở lên test ngay
 
     // Khai báo các view giao diện
-    private TextView tvGreeting;
-    private TextView tvCurrentDate;
+    private TextView tvEmployeeGreeting;
     private TextView tvTodayStatusBadge;
     private TextView tvTodayHoursPreview;
     private TextView tvTodayCheckIn;
@@ -47,6 +49,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
     private TextView tvMonthlyTotalHours;
     private TextView tvHistoryCount;
     private TextView tvFilterMonthLabel;
+    private MaterialButton btnEmployeeLogout;
     private MaterialButton btnCheckIn;
     private MaterialButton btnCheckOut;
     private MaterialButton btnRefresh;
@@ -84,6 +87,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
 
     // Khởi tạo các tầng nghiệp vụ và nạp thông tin phiên đăng nhập
     private void initDependencies() {
+        authService = new AuthService(this);
         prefManager = SharedPrefManager.getInstance(this);
         workLogService = new WorkLogService(this);
 
@@ -96,13 +100,14 @@ public class EmployeeMainActivity extends AppCompatActivity {
         int sessionEmpId = prefManager.getEmployeeId();
         if (sessionEmpId > 0) {
             currentEmployeeId = sessionEmpId;
+        } else if (authService.getCurrentSession() != null && authService.getCurrentSession().getEmployeeId() > 0) {
+            currentEmployeeId = authService.getCurrentSession().getEmployeeId();
         }
     }
 
     // Ánh xạ các thành phần giao diện từ layout XML
     private void initViews() {
-        tvGreeting = findViewById(R.id.tvGreeting);
-        tvCurrentDate = findViewById(R.id.tvCurrentDate);
+        tvEmployeeGreeting = findViewById(R.id.tvEmployeeGreeting);
         tvTodayStatusBadge = findViewById(R.id.tvTodayStatusBadge);
         tvTodayHoursPreview = findViewById(R.id.tvTodayHoursPreview);
         tvTodayCheckIn = findViewById(R.id.tvTodayCheckIn);
@@ -110,6 +115,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
         tvMonthlyTotalHours = findViewById(R.id.tvMonthlyTotalHours);
         tvHistoryCount = findViewById(R.id.tvHistoryCount);
         tvFilterMonthLabel = findViewById(R.id.tvFilterMonthLabel);
+        btnEmployeeLogout = findViewById(R.id.btnEmployeeLogout);
         btnCheckIn = findViewById(R.id.btnCheckIn);
         btnCheckOut = findViewById(R.id.btnCheckOut);
         btnRefresh = findViewById(R.id.btnRefresh);
@@ -129,6 +135,9 @@ public class EmployeeMainActivity extends AppCompatActivity {
 
     // Gán sự kiện click cho các nút bấm chức năng
     private void setupListeners() {
+        if (btnEmployeeLogout != null) {
+            btnEmployeeLogout.setOnClickListener(v -> performLogout());
+        }
         btnCheckIn.setOnClickListener(v -> handleCheckIn());
         btnCheckOut.setOnClickListener(v -> showConfirmCheckOutDialog());
         btnRefresh.setOnClickListener(v -> refreshData());
@@ -147,12 +156,29 @@ public class EmployeeMainActivity extends AppCompatActivity {
 
     // Cập nhật thông tin chào mừng và ngày hiện tại
     private void updateHeaderInfo() {
-        String fullname = prefManager.getFullname();
+        String fullname = "";
+        String username = "";
+
+        if (authService != null && authService.getCurrentSession() != null) {
+            fullname = authService.getCurrentSession().getFullname();
+            username = authService.getCurrentSession().getUsername();
+        }
+
+        if (fullname == null || fullname.isEmpty()) {
+            fullname = prefManager.getFullname();
+        }
+
         if (fullname == null || fullname.isEmpty()) {
             fullname = "Phạm Hải Long"; // Tên mặc định khi test trực tiếp
         }
-        tvGreeting.setText("Xin chào, " + fullname + "!");
-        tvCurrentDate.setText("Hôm nay: " + DateUtils.getCurrentDate());
+
+        if (tvEmployeeGreeting != null) {
+            if (username != null && !username.isEmpty()) {
+                tvEmployeeGreeting.setText("Xin chào: " + fullname + " (" + username + ")");
+            } else {
+                tvEmployeeGreeting.setText("Xin chào: " + fullname);
+            }
+        }
     }
 
     // Nạp trạng thái chấm công của ngày hôm nay và cập nhật nút bấm
@@ -313,5 +339,22 @@ public class EmployeeMainActivity extends AppCompatActivity {
             totalHours = workLogService.calculateMonthlyTotalHours(currentEmployeeId, filterMonth, filterYear);
         }
         tvMonthlyTotalHours.setText(String.format(Locale.US, "%.1f giờ", totalHours));
+    }
+
+    // Đăng xuất và điều hướng về LoginActivity
+    private void performLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Đăng xuất")
+                .setMessage("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?")
+                .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                    if (authService != null) authService.logout();
+                    prefManager.logout();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 }
