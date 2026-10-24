@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 8 Vai trò màu cố định chuẩn Material 3 theo AGENTS.md -->
+    <color name="primary">#0F172A</color>
+    <color name="primary_accent">#2563EB</color>
+    <color name="background">#F4F6F8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#4B5563</color>
+    <color name="text_muted">#6B7280</color>
+    <color name="card_stroke">#E5E7EB</color>
+
+    <!-- Màu cơ bản -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Status Badges: Thành công / Hoàn thành / Đã thanh toán -->
+    <color name="badge_success_bg">#DCFCE7</color>
+    <color name="badge_success_text">#15803D</color>
+    <color name="badge_success_stroke">#BBF7D0</color>
+
+    <!-- Status Badges: Nguy hiểm / Lỗi / Hết hạn -->
+    <color name="badge_danger_bg">#FEE2E2</color>
+    <color name="badge_danger_text">#B91C1C</color>
+    <color name="badge_danger_stroke">#FECACA</color>
+
+    <!-- Status Badges: Cảnh báo / Chờ duyệt / Đang làm việc -->
+    <color name="badge_warning_bg">#FEF3C7</color>
+    <color name="badge_warning_text">#B45309</color>
+    <color name="badge_warning_stroke">#FDE68A</color>
+
+    <!-- Status Badges: Thông tin / Đã tính / Đã xác nhận -->
+    <color name="badge_info_bg">#DBEAFE</color>
+    <color name="badge_info_text">#1D4ED8</color>
+    <color name="badge_info_stroke">#BFDBFE</color>
+
+    <!-- Nút thao tác Sửa / Xóa -->
+    <color name="btn_edit_bg">#EFF6FF</color>
+    <color name="btn_edit_stroke">#BFDBFE</color>
+    <color name="btn_edit_text">#1D4ED8</color>
+    <color name="btn_delete_bg">#FEF2F2</color>
+    <color name="btn_delete_stroke">#FECACA</color>
+    <color name="btn_delete_text">#DC2626</color>
 </resources>
