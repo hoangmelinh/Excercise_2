@@ -18,6 +18,11 @@ public class Salary {
     private double totalSalary;
     private String status;
 
+    // Thuộc tính mở rộng phục vụ SQL LEFT JOIN chống N+1 Query
+    private String employeeCode;
+    private String employeeName;
+    private double hourlyRate;
+
     // Khởi tạo đối tượng rỗng
     public Salary() {}
 
@@ -44,6 +49,12 @@ public class Salary {
         this.status = status;
     }
 
+    // Tính số giờ làm việc tiêu chuẩn (không tính tăng ca)
+    public double getRegularHours() {
+        double regular = totalHours - overtimeHours;
+        return regular > 0 ? Math.round(regular * 10.0) / 10.0 : 0.0;
+    }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -67,4 +78,13 @@ public class Salary {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public String getEmployeeCode() { return employeeCode; }
+    public void setEmployeeCode(String employeeCode) { this.employeeCode = employeeCode; }
+
+    public String getEmployeeName() { return employeeName; }
+    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
+
+    public double getHourlyRate() { return hourlyRate; }
+    public void setHourlyRate(double hourlyRate) { this.hourlyRate = hourlyRate; }
 }
